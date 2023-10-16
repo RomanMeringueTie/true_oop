@@ -74,7 +74,9 @@ void List::insertNode(int key)
 
 Node *List::lookup(int key)
 {
-    Node* tmp = head;
+    if (head == NULL)
+        throw Empty();
+    Node *tmp = head;
     while (tmp)
     {
         if (tmp->key == key)
@@ -84,8 +86,7 @@ Node *List::lookup(int key)
     return NULL;
 }
 
-    void
-    List::printList()
+void List::printList()
 {
     Node *temp = head;
     if (head == NULL)
@@ -129,6 +130,8 @@ void Stack::insertNode(int key)
 
 void Stack::deleteNode()
 {
+    if (head == NULL)
+        throw Empty();
     head->decLen();
     Node *temp1 = head;
     head = head->next;
@@ -148,6 +151,8 @@ void Queue::insertNode(int key)
 
 void Queue::deleteNode()
 {
+    if (head == NULL)
+        throw Empty();
     head->decLen();
     Node *temp1 = head;
     head = head->next;

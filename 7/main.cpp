@@ -46,6 +46,15 @@ void testStack()
     {
         std::cout << "Stack overflow" << std::endl;
     }
+    try
+    {
+        Stack f;
+        f.lookup(1);
+    }
+    catch (Stack::Empty)
+    {
+        std::cout << "No data" << std::endl;
+    }
 }
 
 void testQueue()
@@ -56,7 +65,6 @@ void testQueue()
     q.printList();
     q.deleteNode();
     q.printList();
-    std::cout << q.lookup(5)->key << std::endl;
     std::cout << "Len of queue = " << q.getLen() << std::endl;
     q.freeList();
 }
@@ -64,7 +72,7 @@ void testQueue()
 int main()
 {
     // testList();
-    // testStack();
-    testQueue();
+    testStack();
+    // testQueue();
     return 0;
 }
