@@ -1,11 +1,10 @@
 all: app
 
-app: main.cpp life_game.cpp 
-	g++ -I ~/oop/cw -Wall -o app main.cpp life_game.cpp -lsfml-graphics -lsfml-window -lsfml-system
-
 life_game.o: life_game.cpp
-	g++ -c -I ~/oop/cw -Wall -o app life_game.o -lsfml-graphics -lsfml-window -lsfml-system
+	g++ -c -I . -Wall -o life_game.o life_game.cpp -lsfml-graphics -lsfml-window -lsfml-system
 
+app: main.cpp life_game.o
+	g++ -I . -Wall -o app main.cpp life_game.o -lsfml-graphics -lsfml-window -lsfml-system
 
 .PHONY: run
 
@@ -16,3 +15,4 @@ run: app
 
 clean: app
 	rm app
+	rm *.o
