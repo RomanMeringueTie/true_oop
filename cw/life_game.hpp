@@ -2,6 +2,7 @@
 #include <vector>
 #include <unistd.h>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #define HEIGHT 10
 #define WIDTH 10
 int mod(int n) { return n > 0 ? n : 0 - n; }
@@ -44,6 +45,25 @@ public:
     int get_x() { return point.get_x(); }
     int get_y() { return point.get_y(); }
     virtual void move() = 0;
+    virtual void draw(sf::RenderWindow &window) = 0;
+    void kill(sf::RenderWindow &window)
+    {
+        float coordinates[10] = {10, 110, 210, 310, 410, 510, 610, 710, 810, 910};
+        sf::Texture t;
+        t.loadFromFile("src/red.png");
+        sf::Sprite s(t);
+        s.setPosition(coordinates[get_x()], coordinates[get_y()]);
+        window.draw(s);
+    }
+    void appear(sf::RenderWindow &window)
+    {
+        float coordinates[10] = {10, 110, 210, 310, 410, 510, 610, 710, 810, 910};
+        sf::Texture t;
+        t.loadFromFile("src/check.png");
+        sf::Sprite s(t);
+        s.setPosition(coordinates[get_x()], coordinates[get_y()]);
+        window.draw(s);
+    }
 };
 
 class Carrot : public Creature
@@ -60,6 +80,15 @@ public:
     {
         point.set_x(rand() % WIDTH);
         point.set_y(rand() % HEIGHT);
+    }
+    void draw(sf::RenderWindow &window)
+    {
+        float coordinates[10] = {10, 110, 210, 310, 410, 510, 610, 710, 810, 910};
+        sf::Texture t;
+        t.loadFromFile("src/carrot2.jpg");
+        sf::Sprite s(t);
+        s.setPosition(coordinates[get_x()], coordinates[get_y()]);
+        window.draw(s);
     }
 };
 
@@ -95,6 +124,15 @@ public:
         else
             point.set_y(mod((point.get_y() - a) % WIDTH));
         hunger -= 0.2;
+    }
+    void draw(sf::RenderWindow &window)
+    {
+        float coordinates[10] = {10, 110, 210, 310, 410, 510, 610, 710, 810, 910};
+        sf::Texture t;
+        t.loadFromFile("src/hare2.jpg");
+        sf::Sprite s(t);
+        s.setPosition(coordinates[get_x()], coordinates[get_y()]);
+        window.draw(s);
     }
 };
 
@@ -157,12 +195,11 @@ public:
     }
     void draw(sf::RenderWindow &window)
     {
-        float array_x[10] = {0, 100, 200, 300, 400, 500, 602, 700, 800, 900};
-        float array_y[10] = {5, 105, 205, 302, 402, 502, 600, 700, 800, 900};
+        float coordinates[10] = {10, 110, 210, 310, 410, 510, 610, 710, 810, 910};
         sf::Texture t;
-        t.loadFromFile("src/wolf.jpg");
+        t.loadFromFile("src/wolf2.jpg");
         sf::Sprite s(t);
-        s.setPosition(array_x[point.get_x()], array_y[point.get_y()]);
+        s.setPosition(coordinates[get_x()], coordinates[get_y()]);
         window.draw(s);
     }
 };

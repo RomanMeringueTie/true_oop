@@ -2,32 +2,38 @@
 
 int main()
 {
+    sf::SoundBuffer buffer;
+    if (!buffer.loadFromFile("src/music.wav"))
+        return -1;
+    sf::Sound music;
+    music.setBuffer(buffer);
+    music.play();
+    music.setLoop(true);
     int WolfKills = 0;
     int HareKills = 0;
     int WolfHungerDies = 0;
     int HareHungerDies = 0;
     int Timer = 0;
+    int living_cycle = 0;
+    int hares_rand = 0;
     sf::Texture t;
     t.loadFromFile("src/fon.png");
     sf::Sprite s(t);
-    float array_x[10] = {0, 100, 200, 300, 400, 500, 602, 700, 800, 900};
-    float array_y[10] = {5, 105, 205, 302, 402, 502, 600, 700, 800, 900};
     srand(time(NULL));
     Carrot c;
     Hare h;
+    std::vector<Hare> hares;
+    hares.push_back(h);
     std::vector<Wolf> wolfs;
     while (wolfs.size() != 5)
     {
         Wolf w;
         wolfs.push_back(w);
     }
-    std::vector<Hare> hares;
-    hares.push_back(h);
     sf::RenderWindow window(sf::VideoMode(1000, 1000), "Life Game");
-    int living_cycle = 0;
-    int hares_rand = 0;
     while (window.isOpen())
     {
+        window.clear();
         Timer++;
         window.draw(s);
         int MissingWolfCount = 0;
@@ -52,19 +58,10 @@ int main()
         }
         for (size_t i = 0; i < hares.size(); i++)
         {
-            sf::Texture t;
-            t.loadFromFile("src/hare.jpg");
-            sf::Sprite s(t);
-            s.setPosition(array_x[hares[i].get_x()], array_y[hares[i].get_y()]);
-            window.draw(s);
+            hares[i].draw(window);
         }
-        sf::Texture t;
-        t.loadFromFile("src/carrot.jpg");
-        sf::Sprite s(t);
-        s.setPosition(array_x[c.get_x()], array_y[c.get_y()]);
-        window.draw(s);
+        c.draw(window);
         sleep(1);
-        window.display();
         if (living_cycle % 3 == 0)
         {
             hares_rand = rand() % 5;
@@ -81,6 +78,7 @@ int main()
                 else
                 {
                     auto iter = hares.cbegin();
+                    hares[i].kill(window);
                     hares.erase(iter + i);
                     std::cout << "Hare died of hunger!" << std::endl;
                     HareHungerDies++;
@@ -93,6 +91,7 @@ int main()
                 else
                 {
                     auto iter = wolfs.cbegin();
+                    wolfs[i].kill(window);
                     wolfs.erase(iter + i);
                     std::cout << "Wolf died of hunger!" << std::endl;
                     WolfHungerDies++;
@@ -104,6 +103,7 @@ int main()
             if (hares[i].get_x() == c.get_x() && hares[i].get_y() == c.get_y())
             {
                 hares[i].set_hunger(hares[i].get_hunger() + 0.2);
+                hares[i].kill(window);
                 std::cout << "Carrot killed!" << std::endl;
                 HareKills++;
             }
@@ -117,6 +117,7 @@ int main()
                     wolfs[j].set_hunger(wolfs[j].get_hunger() + 0.2);
                     auto iter = hares.cbegin();
                     hares.erase(iter + j);
+                    wolfs[i].kill(window);
                     std::cout << "Hare killed!" << std::endl;
                     WolfKills++;
                     wolfs[i].plus_hare_kills_count();
@@ -132,10 +133,11 @@ int main()
         }
         if (living_cycle % 5 == 0)
         {
+            c.kill(window);
             c.move();
             std::cout << "Carrot appeared!" << std::endl;
         }
-        window.clear();
+        window.display();
     }
     std::cout << "Game lasted " << Timer << " seconds" << std::endl
               << "Hares killed carrots " << HareKills << " times" << std::endl
