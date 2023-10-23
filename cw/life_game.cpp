@@ -38,6 +38,7 @@ void Creature::kill(sf::RenderWindow &window)
 Carrot::Carrot() : Creature()
 {
 }
+Carrot::Carrot(int x, int y) : Creature(x, y) {}
 Carrot::~Carrot()
 {
 }
@@ -50,7 +51,7 @@ void Carrot::draw(sf::RenderWindow &window)
 {
     float coordinates[10] = {10, 110, 210, 310, 410, 510, 610, 710, 810, 910};
     sf::Texture t;
-    t.loadFromFile("src/carrot2.jpg");
+    t.loadFromFile("src/carrot.jpg");
     sf::Sprite s(t);
     s.setPosition(coordinates[get_x()], coordinates[get_y()]);
     window.draw(s);
@@ -61,6 +62,7 @@ Hare::Hare() : Creature()
 {
     hunger = 1;
 }
+Hare::Hare(int x, int y) : Creature(x, y) { hunger = 1; }
 Hare::~Hare()
 {
 }
@@ -90,7 +92,7 @@ void Hare::draw(sf::RenderWindow &window)
 {
     float coordinates[10] = {10, 110, 210, 310, 410, 510, 610, 710, 810, 910};
     sf::Texture t;
-    t.loadFromFile("src/hare2.jpg");
+    t.loadFromFile("src/hare.jpg");
     sf::Sprite s(t);
     s.setPosition(coordinates[get_x()], coordinates[get_y()]);
     window.draw(s);
@@ -101,6 +103,7 @@ Wolf::Wolf() : Creature(), is_reproduce(false)
 {
     hunger = 1;
 }
+Wolf::Wolf(int x, int y) : Creature(x, y), is_reproduce(false) { hunger = 1; }
 Wolf::~Wolf()
 {
 }
@@ -151,7 +154,7 @@ void Wolf::draw(sf::RenderWindow &window)
 {
     float coordinates[10] = {10, 110, 210, 310, 410, 510, 610, 710, 810, 910};
     sf::Texture t;
-    t.loadFromFile("src/wolf2.jpg");
+    t.loadFromFile("src/wolf.jpg");
     sf::Sprite s(t);
     s.setPosition(coordinates[get_x()], coordinates[get_y()]);
     window.draw(s);

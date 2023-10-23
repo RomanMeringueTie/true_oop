@@ -44,6 +44,7 @@ class Carrot : public Creature
 
 public:
     Carrot();
+    Carrot(int x, int y);
     ~Carrot();
     void move();
     void draw(sf::RenderWindow &window);
@@ -54,6 +55,7 @@ class Hare : public Creature
 
 public:
     Hare();
+    Hare(int x,int y);
     ~Hare();
     float get_hunger();
     void set_hunger(float n);
@@ -69,6 +71,7 @@ protected:
 
 public:
     Wolf();
+    Wolf(int x,int y);
     ~Wolf();
     float get_hunger();
     void set_hunger(float n);

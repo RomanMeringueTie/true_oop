@@ -33,9 +33,9 @@ int main()
     sf::RenderWindow window(sf::VideoMode(1000, 1000), "Life Game");
     while (window.isOpen())
     {
-        window.clear();
         Timer++;
         window.draw(s);
+        window.clear();
         int MissingWolfCount = 0;
         while (wolfs.size() < 5)
         {
