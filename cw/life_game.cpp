@@ -3,6 +3,7 @@
 // Point
 Point::Point(int x, int y) : x(x), y(y) {}
 Point::Point() : x(rand() % WIDTH), y(rand() % HEIGHT) {}
+Point::~Point() {}
 int Point::get_x() { return x; }
 int Point::get_y() { return y; }
 void Point::set_x(int n) { x = n; }

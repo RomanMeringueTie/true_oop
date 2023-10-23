@@ -16,6 +16,7 @@ protected:
 public:
     Point(int x, int y);
     Point();
+    ~Point();
     int get_x();
     int get_y();
     void set_x(int n);

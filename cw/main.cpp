@@ -42,7 +42,6 @@ int main()
         Timer++;
         living_cycle++;
         window.draw(s);
-        window.clear();
         int MissingWolfCount = 0;
         while (wolfs.size() < 5)
         {
@@ -61,7 +60,7 @@ int main()
             hares[i].draw(window);
         }
         c.draw(window);
-        sleep(1);
+        window.display();
         if (living_cycle % 3 == 0)
         {
             hares_rand = rand() % 4;
@@ -69,6 +68,7 @@ int main()
             {
                 Hare tmp;
                 hares.push_back(tmp);
+                tmp.draw(window);
                 std::cout << "Hare appeared!" << std::endl;
             }
             for (size_t i = 0; i < hares.size(); i++)
@@ -103,7 +103,6 @@ int main()
             if (hares[i].get_x() == c.get_x() && hares[i].get_y() == c.get_y())
             {
                 hares[i].set_hunger(hares[i].get_hunger() + 0.2);
-                hares[i].kill(window);
                 std::cout << "Carrot killed!" << std::endl;
                 HareKills++;
             }
@@ -114,17 +113,17 @@ int main()
             {
                 if (wolfs[i].get_x() == hares[j].get_x() && wolfs[i].get_y() == hares[j].get_y())
                 {
-                    wolfs[j].set_hunger(wolfs[j].get_hunger() + 0.2);
+                    wolfs[i].set_hunger(wolfs[i].get_hunger() + 0.2);
                     auto iter = hares.cbegin();
                     hares.erase(iter + j);
-                    wolfs[i].kill(window);
-                    std::cout << "Hare killed!" << std::endl;
+                    std::cout << "Hare killed" << std::endl;
                     WolfKills++;
                     wolfs[i].plus_hare_kills_count();
                     if (wolfs[i].get_hare_kills_count() >= 2 && wolfs[i].get_is_reproduce() == false)
                     {
                         Wolf w;
                         wolfs.push_back(w);
+                        w.draw(window);
                         wolfs[i].set_hunger(wolfs[i].get_hunger() - 0.4);
                         std::cout << "Wolf appeared!" << std::endl;
                     }
@@ -138,6 +137,7 @@ int main()
             std::cout << "Carrot appeared!" << std::endl;
         }
         window.display();
+        sleep(1);
     }
     std::cout << "Game lasted " << Timer << " seconds" << std::endl
               << "Hares killed carrots " << HareKills << " times" << std::endl
