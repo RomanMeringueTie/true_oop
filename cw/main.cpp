@@ -33,7 +33,14 @@ int main()
     sf::RenderWindow window(sf::VideoMode(1000, 1000), "Life Game");
     while (window.isOpen())
     {
+        sf::Event event;
+        while (window.pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed)
+                window.close();
+        }
         Timer++;
+        living_cycle++;
         window.draw(s);
         window.clear();
         int MissingWolfCount = 0;
@@ -45,13 +52,6 @@ int main()
         }
         if (MissingWolfCount)
             std::cout << MissingWolfCount << " Wolfs appeared!" << std::endl;
-        living_cycle++;
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
         for (size_t i = 0; i < wolfs.size(); i++)
         {
             wolfs[i].draw(window);
@@ -64,7 +64,7 @@ int main()
         sleep(1);
         if (living_cycle % 3 == 0)
         {
-            hares_rand = rand() % 5;
+            hares_rand = rand() % 4;
             if (!hares_rand)
             {
                 Hare tmp;
