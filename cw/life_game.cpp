@@ -1,4 +1,4 @@
-#include <life_game.hpp>
+#include "life_game.hpp"
 
 // Point
 Point::Point(int x, int y) : x(x), y(y) {}
@@ -25,6 +25,8 @@ Creature::~Creature()
 }
 int Creature::get_x() { return point.get_x(); }
 int Creature::get_y() { return point.get_y(); }
+void Creature::set_x(int n) { point.set_x(n); }
+void Creature::set_y(int n) { point.set_y(n); }
 void Creature::kill(sf::RenderWindow &window)
 {
     float coordinates[10] = {10, 110, 210, 310, 410, 510, 610, 710, 810, 910};
@@ -36,10 +38,10 @@ void Creature::kill(sf::RenderWindow &window)
 }
 
 // Carrot
-Carrot::Carrot() : Creature()
+Carrot::Carrot() : Creature(), is_killed(0)
 {
 }
-Carrot::Carrot(int x, int y) : Creature(x, y) {}
+Carrot::Carrot(int x, int y) : Creature(x, y), is_killed(0) {}
 Carrot::~Carrot()
 {
 }
@@ -57,6 +59,8 @@ void Carrot::draw(sf::RenderWindow &window)
     s.setPosition(coordinates[get_x()], coordinates[get_y()]);
     window.draw(s);
 }
+void Carrot::change_is_killed() { is_killed = !is_killed; }
+bool Carrot::get_is_killed() { return is_killed; }
 
 // Hare
 Hare::Hare() : Creature()

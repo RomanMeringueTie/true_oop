@@ -3,7 +3,6 @@
 #include <vector>
 #include <unistd.h>
 #include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
 #define HEIGHT 10
 #define WIDTH 10
 
@@ -35,6 +34,8 @@ public:
     ~Creature();
     int get_x();
     int get_y();
+    void set_x(int n);
+    void set_y(int n);
     virtual void move() = 0;
     virtual void draw(sf::RenderWindow &window) = 0;
     void kill(sf::RenderWindow &window);
@@ -42,13 +43,16 @@ public:
 
 class Carrot : public Creature
 {
-
+protected:
+    bool is_killed;
 public:
     Carrot();
     Carrot(int x, int y);
     ~Carrot();
     void move();
     void draw(sf::RenderWindow &window);
+    void change_is_killed();
+    bool get_is_killed();
 };
 
 class Hare : public Creature
@@ -56,7 +60,7 @@ class Hare : public Creature
 
 public:
     Hare();
-    Hare(int x,int y);
+    Hare(int x, int y);
     ~Hare();
     float get_hunger();
     void set_hunger(float n);
@@ -72,7 +76,7 @@ protected:
 
 public:
     Wolf();
-    Wolf(int x,int y);
+    Wolf(int x, int y);
     ~Wolf();
     float get_hunger();
     void set_hunger(float n);
